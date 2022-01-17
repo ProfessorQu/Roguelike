@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class LevelGeneration : MonoBehaviour
 {
+    public GameObject player;
+    Rigidbody2D playerRB;
+
     public Transform[] startingPositions;
     public GameObject[] rooms;
     /*
@@ -17,7 +20,7 @@ public class LevelGeneration : MonoBehaviour
     public float moveAmount;
 
     private float timeBtwRoom;
-    public float startTimeBtwRoom = 0.25f;
+    public float startTimeBtwRoom = 0.0f;
 
     public float minX, maxX;
     public float minY;
@@ -28,9 +31,18 @@ public class LevelGeneration : MonoBehaviour
     private int downCounter = 0;
 
     private void Start() {
+        ContactFilter2D contactFilter2D = new ContactFilter2D();
+        contactFilter2D.useTriggers = true;
+        contactFilter2D.SetLayerMask(whatIsRoom);
+
         int startPosIdx = Random.Range(0, startingPositions.Length);
         transform.position = startingPositions[startPosIdx].position;
+
         Instantiate(rooms[0], transform.position, Quaternion.identity);
+
+        player.transform.position = transform.position;
+
+        playerRB = player.GetComponent<Rigidbody2D>();
 
         direction = Random.Range(1, 6);
     }
@@ -42,6 +54,10 @@ public class LevelGeneration : MonoBehaviour
         }
         else {
             timeBtwRoom -= Time.deltaTime;
+        }
+
+        if (stopGeneration && playerRB.IsSleeping()) {
+            playerRB.WakeUp();
         }
     }
 
