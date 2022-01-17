@@ -415,7 +415,7 @@ Transform:
   m_GameObject: {fileID: 362800668}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 32.8, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 16.63, z: 1}
+  m_LocalScale: {x: 10, y: 36, z: 1}
   m_Children: []
   m_Father: {fileID: 995278352}
   m_RootOrder: 0
@@ -473,7 +473,7 @@ Transform:
   m_GameObject: {fileID: 384271451}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -32.8, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 16.63, z: 1}
+  m_LocalScale: {x: 10, y: 36, z: 1}
   m_Children: []
   m_Father: {fileID: 995278352}
   m_RootOrder: 1
@@ -615,7 +615,7 @@ Transform:
   m_GameObject: {fileID: 787336694}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -32.8, z: 0}
-  m_LocalScale: {x: 37.83325, y: 10, z: 1}
+  m_LocalScale: {x: 36, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 995278352}
   m_RootOrder: 3
@@ -1205,22 +1205,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1476195685}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: Move
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 98229a0d-fa5c-4bc3-bf22-bcbe90173e48
-    m_ActionName: Player/Move[/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1476195685}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
         m_Arguments:
@@ -1277,7 +1261,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1476195685}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: Bomb
+        m_MethodName: Move
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1287,8 +1271,24 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 724b4559-0de9-4029-b0ea-e678df5983b6
-    m_ActionName: Player/Bomb[/XInputControllerWindows/buttonEast]
+    m_ActionId: a1ff69f7-894a-4138-b70d-7b457c4e4626
+    m_ActionName: Player/Direction[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1476195685}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: Dash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 52c9170f-7374-48e2-83b7-a2c14ebab230
+    m_ActionName: Player/Dash[/Keyboard/j,/XInputControllerWindows/buttonWest]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1312,7 +1312,9 @@ MonoBehaviour:
     m_Bits: 128
   groundCheckRadius: 0.2
   speed: 8
-  bombRadius: 5
+  maxFallSpeed: -10
+  dashVelocity: 12
+  dashTime: 1
   rememberGroundedTime: 0.2
   rememberJumpInputTime: 0.2
   jumpForce: 8
@@ -1615,7 +1617,7 @@ Transform:
   m_GameObject: {fileID: 1655486469}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 32.8, z: 0}
-  m_LocalScale: {x: 35.96237, y: 10, z: 1}
+  m_LocalScale: {x: 36, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 995278352}
   m_RootOrder: 2

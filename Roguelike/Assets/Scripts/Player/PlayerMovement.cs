@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
+    SpriteRenderer render;
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -16,9 +17,17 @@ public class PlayerMovement : MonoBehaviour
     bool facingRight = true;
 
     [Header("Speed")]
-    public float speed = 8f;
+    private Vector2 direction;
 
-    public float bombRadius = 10f;
+    public float speed = 8f;
+    public float maxFallSpeed = -10f;
+
+    [Header("Dash")]
+    public float dashVelocity = 12f;
+    public float dashTime = 0.2f;
+    private float dashTimer;
+
+    private bool canDash;
 
     [Header("Jump")]
     public float rememberGroundedTime = 0.1f;
@@ -34,11 +43,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
+        render = GetComponent<SpriteRenderer>();
     }
 
     private void Update() {
-        float horizontalVel = horizontal * speed;
-        rb.velocity = new Vector2(horizontalVel, rb.velocity.y);
+        if (!canDash) {
+            render.color = Color.red;
+        }
+        else {
+            render.color = Color.white;
+        }
+
+        if (dashTimer > 0f) {
+            rb.velocity = direction * dashVelocity;
+            render.color = Color.blue;
+        }
+        else {
+            float horizontalVel = horizontal * speed;
+            rb.velocity = new Vector2(horizontalVel, rb.velocity.y);
+        }
 
         if (!facingRight && horizontal > 0f) {
             Flip();
@@ -49,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsGrounded()) {
             groundedTimer = rememberGroundedTime;
+            canDash = true;
         }
 
         if (groundedTimer > 0f && rememberJumpTimer > 0f) {
@@ -61,8 +85,14 @@ public class PlayerMovement : MonoBehaviour
             jumpCanceled = false;
         }
 
+        if (rb.velocity.y < maxFallSpeed) {
+            rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
+        }
+
         groundedTimer -= Time.deltaTime;
         rememberJumpTimer -= Time.deltaTime;
+
+        dashTimer -= Time.deltaTime;
     }
 
     private bool IsGrounded() {
@@ -76,10 +106,6 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    public void Move(InputAction.CallbackContext context) {
-        horizontal = context.ReadValue<float>();
-    }
-
     public void Jump(InputAction.CallbackContext context) {
         if (context.performed) {
             rememberJumpTimer = rememberJumpInputTime;
@@ -88,24 +114,21 @@ public class PlayerMovement : MonoBehaviour
         if (context.canceled && rb.velocity.y > 0f) {
             jumpCanceled = true;
         }
-
-        // if (context.performed && IsGrounded()) {
-        //     rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        // }
-
-        // if (context.canceled && rb.velocity.y > 0f) {
-        //     rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpEndedFallSpeed);
-        // }
     }
 
-    public void Bomb(InputAction.CallbackContext context) {
-        if (context.started) {
-            Collider2D[] blocks = Physics2D.OverlapCircleAll(transform.position, bombRadius);
-            foreach (var block in blocks) {
-                if (block.CompareTag("Destructible")) {
-                    Destroy(block.gameObject);
-                }
-            }
+    public void Move(InputAction.CallbackContext context) {
+        Vector2 newDir = context.ReadValue<Vector2>();
+        horizontal = newDir.x;
+
+        if (dashTimer <= 0f) {
+            direction = newDir.normalized;
+        }
+    }
+
+    public void Dash(InputAction.CallbackContext context) {
+        if (context.started && canDash) {
+            dashTimer = dashTime;
+            canDash = false;
         }
     }
 }
