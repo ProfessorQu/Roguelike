@@ -599,7 +599,7 @@ GameObject:
   - component: {fileID: 787336695}
   - component: {fileID: 787336696}
   - component: {fileID: 787336697}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1003,9 +1003,9 @@ MonoBehaviour:
   - {fileID: 1145986825}
   rooms:
   - {fileID: 7642852426053640571, guid: 6ec35605771276745b62ff983c49fc68, type: 3}
-  - {fileID: 7273711661837521310, guid: 192eb30ecbfa21842907d124fe03ac3f, type: 3}
-  - {fileID: 8959731178283245386, guid: e4a5b0fff21e7d748ab2607e47351e6e, type: 3}
-  - {fileID: 312431916072258332, guid: 3f482a91a7515c44c86d82a4fda85d10, type: 3}
+  - {fileID: 6798541841686014789, guid: 192eb30ecbfa21842907d124fe03ac3f, type: 3}
+  - {fileID: 7442375339371738867, guid: e4a5b0fff21e7d748ab2607e47351e6e, type: 3}
+  - {fileID: 7537714058990347414, guid: 3f482a91a7515c44c86d82a4fda85d10, type: 3}
   moveAmount: 10
   startTimeBtwRoom: 0
   minX: -15
@@ -1580,7 +1580,7 @@ GameObject:
   - component: {fileID: 1655486470}
   - component: {fileID: 1655486471}
   - component: {fileID: 1655486472}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
