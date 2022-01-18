@@ -1807,7 +1807,7 @@ MonoBehaviour:
   dashDestroyRadius: 1.5
   dashesLeft: 3
   dashRechargeTime: 1
-  dashShakeIntensity: 0
+  dashShakeIntensity: 8
   dashShakeDuration: 0.1
   rememberGroundedTime: 0.2
   rememberJumpInputTime: 0.2
