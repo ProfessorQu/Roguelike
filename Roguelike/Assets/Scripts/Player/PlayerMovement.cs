@@ -12,7 +12,22 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public Transform groundCheck;
     public LayerMask whatIsGround;
-    public float groundCheckRadius = 0.2f;
+    public Vector2 groundCheckSize = new Vector2(2.6f, 1f);
+
+    // WALL JUMP
+    [Header("Wall Jump")]
+    public Transform rightWallCheck;
+    public Transform leftWallCheck;
+    public float wallCheckSize = 0.1f;
+
+    public Vector2 wallJumpForce = new Vector2(1f, 0.5f);
+
+    public float wallJumpTime = 0.1f;
+    private float wallJumpTimer;
+
+    private Vector2 wallJumpVelocity;
+
+    public float slidingSpeed = 3f;
 
     // GENERAL
     [Header("General")]
@@ -85,10 +100,20 @@ public class PlayerMovement : MonoBehaviour
 
             trail.emitting = true;
         }
+        // Wall jump
+        else if (wallJumpTimer > 0f) {
+            rb.velocity = wallJumpVelocity;
+        }
         // Normal movement
         else {
             float horizontalVel = horizontal * speed;
-            rb.velocity = new Vector2(horizontalVel, rb.velocity.y);
+            float fallSpeed = rb.velocity.y;
+
+            if (IsTouchingWall() && rb.velocity.y < 0f) {
+                fallSpeed = -slidingSpeed;
+            }
+
+            rb.velocity = new Vector2(horizontalVel, fallSpeed);
 
             trail.emitting = false;
         }
@@ -125,6 +150,22 @@ public class PlayerMovement : MonoBehaviour
             jumpCanceled = false;
         }
 
+        // Wall Jump
+        Collider2D wall = IsTouchingWall();
+        if (wall != null && rememberJumpTimer > 0f) {
+            float side = transform.position.x - wall.transform.position.x;
+            if (side < 0) {
+                side = -1f;
+            }
+            else if (side > 0) {
+                side = 1f;
+            }
+            wallJumpVelocity = new Vector2(side * wallJumpForce.x, wallJumpForce.y);
+            
+            wallJumpTimer = wallJumpTime;
+            rememberJumpTimer = 0f;
+        }
+
         // Clamp the fall speed
         if (rb.velocity.y < maxFallSpeed && dashTimer <= 0f) {
             rb.velocity = new Vector2(rb.velocity.x, maxFallSpeed);
@@ -142,6 +183,7 @@ public class PlayerMovement : MonoBehaviour
         // Decrease timers
         groundedTimer -= Time.deltaTime;
         rememberJumpTimer -= Time.deltaTime;
+        wallJumpTimer -= Time.deltaTime;
 
         dashTimer -= Time.deltaTime;
     }
@@ -152,7 +194,20 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded() {
         // Check if the player is grounded
-        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, whatIsGround);
+    }
+
+    private Collider2D IsTouchingWall() {
+        // Check if the player is touching a wall
+        Collider2D right = Physics2D.OverlapCircle(rightWallCheck.position, wallCheckSize, whatIsGround);
+        Collider2D left = Physics2D.OverlapCircle(leftWallCheck.position, wallCheckSize, whatIsGround);
+
+        if (right != null) {
+            return right;
+        }
+        else {
+            return left;
+        }
     }
 
     private void Flip() {
@@ -204,5 +259,14 @@ public class PlayerMovement : MonoBehaviour
             // Shake camera
             CameraShake.Instance.Shake(dashShakeIntensity, dashShakeDuration);
         }
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawCube(groundCheck.position, groundCheckSize);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(rightWallCheck.position, wallCheckSize);
+        Gizmos.DrawSphere(leftWallCheck.position, wallCheckSize);
     }
 }
