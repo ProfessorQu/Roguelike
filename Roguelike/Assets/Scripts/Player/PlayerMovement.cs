@@ -16,8 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     // WALL JUMP
     [Header("Wall Jump")]
-    public Transform rightWallCheck;
-    public Transform leftWallCheck;
+    public Transform wallCheck;
     public float wallCheckSize = 0.1f;
 
     public Vector2 wallJumpForce = new Vector2(1f, 0.5f);
@@ -90,8 +89,9 @@ public class PlayerMovement : MonoBehaviour
         if (dashTimer > 0f) {
             rb.velocity = direction * dashVelocity;
 
+            Vector2 dashPosition = new Vector2(transform.position.x + direction.x, transform.position.y + direction.y);
             // Break blocks
-            Collider2D[] blocks = Physics2D.OverlapCircleAll(transform.position, dashDestroyRadius, whatIsGround);
+            Collider2D[] blocks = Physics2D.OverlapCircleAll(dashPosition, dashDestroyRadius, whatIsGround);
             foreach (var block in blocks) {
                 if (block.CompareTag("Destructible")) {
                     Destroy(block.gameObject);
@@ -199,15 +199,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Collider2D IsTouchingWall() {
         // Check if the player is touching a wall
-        Collider2D right = Physics2D.OverlapCircle(rightWallCheck.position, wallCheckSize, whatIsGround);
-        Collider2D left = Physics2D.OverlapCircle(leftWallCheck.position, wallCheckSize, whatIsGround);
-
-        if (right != null) {
-            return right;
-        }
-        else {
-            return left;
-        }
+        return Physics2D.OverlapCircle(wallCheck.position, wallCheckSize, whatIsGround);
     }
 
     private void Flip() {
@@ -266,7 +258,10 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawCube(groundCheck.position, groundCheckSize);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(rightWallCheck.position, wallCheckSize);
-        Gizmos.DrawSphere(leftWallCheck.position, wallCheckSize);
+        Gizmos.DrawSphere(wallCheck.position, wallCheckSize);
+
+        Gizmos.color = Color.cyan;
+        Vector2 dashPosition = new Vector2(transform.position.x + direction.x, transform.position.y + direction.y);
+        Gizmos.DrawWireSphere(dashPosition, dashDestroyRadius);
     }
 }
