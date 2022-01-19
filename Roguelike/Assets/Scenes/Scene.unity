@@ -2190,11 +2190,11 @@ MonoBehaviour:
   move: {fileID: 1476195685}
   isDashing: 0
   trail: {fileID: 1254435560}
-  dashVelocity: 12
-  dashTime: 5
+  dashVelocity: 24
+  dashTime: 0.2
   dashDestroyRadius: 1
   dashesLeft: 3
-  dashRechargeTime: 0.2
+  dashRechargeTime: 5
   dashShakeIntensity: 5
   dashShakeDuration: 0.1
 --- !u!114 &1476195688
