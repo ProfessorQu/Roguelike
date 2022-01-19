@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class DashUI : MonoBehaviour
 {
-    public Image[] dashes;
     public PlayerDash player;
+    public Image[] dashes;
 
     [Space]
     public Color dashRecharging;
