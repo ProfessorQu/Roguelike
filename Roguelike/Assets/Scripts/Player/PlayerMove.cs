@@ -70,11 +70,10 @@ public class PlayerMove : MonoBehaviour
     }
 
     public void Move(InputAction.CallbackContext context) {
-        // Get move input
-        Vector2 newDir = context.ReadValue<Vector2>();
-        horizontal = newDir.x;
-
         if (!freezeControl) {
+            // Get move input
+            Vector2 newDir = context.ReadValue<Vector2>();
+            horizontal = newDir.x;
             direction = newDir.normalized;
         }
     }

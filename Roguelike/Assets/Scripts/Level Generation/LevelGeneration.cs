@@ -42,13 +42,12 @@ public class LevelGeneration : MonoBehaviour
 
         Instantiate(rooms[0], transform.position, Quaternion.identity);
 
-        player.transform.position = transform.position;
+        Vector2 playerPosition = new Vector2(transform.position.x, transform.position.y + player.transform.localScale.y * 2);
+        player.transform.position = playerPosition;
+
         playerRB = player.GetComponent<Rigidbody2D>();
 
-        Vector2 platformPosition = new Vector2(transform.position.x, transform.position.y - player.transform.localScale.y * 2);
-
-        Instantiate(startingPlatform, platformPosition, Quaternion.identity);
-        Debug.Log(platformPosition);
+        Instantiate(startingPlatform, transform.position, Quaternion.identity);
 
         direction = Random.Range(1, 6);
     }

@@ -1952,6 +1952,7 @@ GameObject:
   - component: {fileID: 1476195683}
   - component: {fileID: 1476195686}
   - component: {fileID: 1476195685}
+  - component: {fileID: 1476195689}
   - component: {fileID: 1476195688}
   - component: {fileID: 1476195687}
   - component: {fileID: 1476195684}
@@ -2209,7 +2210,7 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 2
+  m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1476195687
@@ -2264,6 +2265,19 @@ MonoBehaviour:
   wallJumpForce: {x: 10, y: 8}
   wallJumpTime: 0.1
   slidingSpeed: 3
+--- !u!114 &1476195689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476195680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ad8e13f632f024b93e0d82c8c94867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dash: {fileID: 1476195687}
 --- !u!1 &1477867058
 GameObject:
   m_ObjectHideFlags: 0
