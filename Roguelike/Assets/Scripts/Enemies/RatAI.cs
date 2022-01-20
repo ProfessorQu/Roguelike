@@ -11,10 +11,10 @@ public class RatAI : MonoBehaviour
 
     public float speed = 10;
 
-    [Header("Wall Check")]
-    public Transform wallCheck;
-    public LayerMask whatIsWall;
-    public float wallCheckSize = 0.1f;
+    [Header("Front Check")]
+    public Transform frontCheck;
+    public LayerMask whatIGround;
+    public Vector2 frontCheckSize = new Vector2(0.1f, 0.3f);
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -37,7 +37,7 @@ public class RatAI : MonoBehaviour
     }
 
     private bool IsTouchingWall() {
-        return Physics2D.OverlapCircle(wallCheck.position, wallCheckSize, whatIsWall);
+        return Physics2D.OverlapBox(frontCheck.position, frontCheckSize, 0f);
     } 
 
     private void Flip() {
@@ -52,6 +52,6 @@ public class RatAI : MonoBehaviour
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(wallCheck.position, wallCheckSize);
+        Gizmos.DrawCube(frontCheck.position, frontCheckSize);
     }
 }
