@@ -9,16 +9,11 @@ public class GuardAI : MonoBehaviour
     private int direction = 1;
     private bool facingRight = true;
 
-    public float speed = 3;
-    
-
-    [Header("Ground Check")]
-    public Transform groundCheck;
-    public LayerMask whatIsGround;
-    public float groundCheckSize = 0.1f;
+    public float speed = 10;
 
     [Header("Wall Check")]
     public Transform wallCheck;
+    public LayerMask whatIsWall;
     public float wallCheckSize = 0.1f;
 
     private void Start() {
@@ -28,7 +23,7 @@ public class GuardAI : MonoBehaviour
     private void Update() {
         rb.velocity = new Vector2(direction * speed, rb.velocity.y);
 
-        if (IsTouchingWall()) {//!GroundInFront() || IsTouchingWall()) {
+        if (IsTouchingWall()) {
             direction *= -1;
         }
         
@@ -41,12 +36,8 @@ public class GuardAI : MonoBehaviour
         }
     }
 
-    private bool GroundInFront() {
-        return Physics2D.OverlapCircle(groundCheck.position, groundCheckSize, whatIsGround);
-    }
-
     private bool IsTouchingWall() {
-        return Physics2D.OverlapCircle(wallCheck.position, wallCheckSize, whatIsGround);
+        return Physics2D.OverlapCircle(wallCheck.position, wallCheckSize, whatIsWall);
     }
 
     private void Flip() {
@@ -60,10 +51,7 @@ public class GuardAI : MonoBehaviour
     }
 
     private void OnDrawGizmos() {
-        // Gizmos.color = Color.blue;
-        // Gizmos.DrawSphere(wallCheck.position, wallCheckSize);
-
-        // Gizmos.color = Color.black;
-        // Gizmos.DrawSphere(groundCheck.position, groundCheckSize);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(wallCheck.position, wallCheckSize);
     }
 }

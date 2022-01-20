@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1388668057101681632}
   - component: {fileID: 1388668057101681639}
   - component: {fileID: 1388668057101681638}
-  - component: {fileID: 1388668057101681637}
+  - component: {fileID: 2888610272704741727}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Enemy
@@ -28,11 +28,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388668057101681636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 5, z: 0}
+  m_LocalPosition: {x: 1.5, y: 1.5, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children:
   - {fileID: 1388668057432258722}
-  - {fileID: 8583260002735079168}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -134,7 +133,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &1388668057101681637
+--- !u!114 &2888610272704741727
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,16 +142,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1388668057101681636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a75c1753162e9bd40b867fcdd6108b9f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cbc7b8bb040a6e4bb939a0bb5a3d21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  groundCheck: {fileID: 8583260002735079168}
-  whatIsGround:
+  wallCheck: {fileID: 1388668057432258722}
+  whatIsWall:
     serializedVersion: 2
     m_Bits: 128
-  groundCheckSize: 0.1
-  wallCheck: {fileID: 1388668057432258722}
   wallCheckSize: 0.3
 --- !u!1 &1388668057432258721
 GameObject:
@@ -183,34 +180,4 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1388668057101681633}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8583260002735079199
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8583260002735079168}
-  m_Layer: 0
-  m_Name: GroundCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8583260002735079168
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8583260002735079199}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6666666, y: -1.6666666, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1388668057101681633}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
