@@ -10,7 +10,8 @@ public class PlayerDash : MonoBehaviour
     private Timer dashTimer = new Timer();
 
     [Header("Static Variables")]
-    public PlayerMove move;
+    PlayerMove move;
+    PlayerJump jump;
 
     public TrailRenderer trail;
 
@@ -29,6 +30,8 @@ public class PlayerDash : MonoBehaviour
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
+        move = GetComponent<PlayerMove>();
+        jump = GetComponent<PlayerJump>();
 
         trail.emitting = false;
         trail.time = dashTime;
@@ -78,7 +81,7 @@ public class PlayerDash : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (isDashing) {
+        if (isDashing && jump.IsTouchingWall()) {
             ResetState();
         }
     }

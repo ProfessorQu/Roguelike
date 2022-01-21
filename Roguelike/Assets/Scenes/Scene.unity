@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9882353, g: 0.98039216, b: 0.98039216, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -458,8 +458,8 @@ MonoBehaviour:
   - {fileID: 721817309}
   - {fileID: 673093801}
   - {fileID: 1406762696}
-  dashRecharging: {r: 0.0068564415, g: 0, b: 1, a: 1}
-  dashReady: {r: 0, g: 1, b: 0.2526455, a: 1}
+  dashRecharging: {r: 0.011764707, g: 0.70980394, b: 0.6666667, a: 1}
+  dashReady: {r: 0.054901965, g: 0.47450984, b: 0.69803923, a: 1}
 --- !u!1 &244473142
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.03529412, b: 1, a: 1}
+  m_Color: {r: 0.05490196, g: 0.4745098, b: 0.69803923, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -953,7 +953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.03529412, b: 1, a: 1}
+  m_Color: {r: 0.05490196, g: 0.4745098, b: 0.69803923, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1185,7 +1185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.53333336, g: 0, b: 0.26666668, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1224,9 +1224,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dash: {fileID: 1476195688}
   blinkColors:
-  - {r: 1, g: 0, b: 0.07359362, a: 1}
-  - {r: 1, g: 0.5663458, b: 0, a: 1}
-  defaultColor: {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.53333336, g: 0, b: 0.26666668, a: 1}
+  - {r: 1, g: 0.41960788, b: 0.20784315, a: 1}
+  defaultColor: {r: 0.53333336, g: 0, b: 0.26666668, a: 1}
   blinkInterval: 0.2
 --- !u!1 &933437092
 GameObject:
@@ -1275,6 +1275,54 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   levelGen: {fileID: 1291136873}
+--- !u!1 &975652910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 975652912}
+  - component: {fileID: 975652911}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &975652911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975652910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 7e2fdcc12b75d65419507981e96c1111, type: 2}
+--- !u!4 &975652912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 975652910}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.9014635, y: -11.327352, z: -4.1415505}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &995278351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,8 +1666,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0.03564167, b: 1, a: 1}
-      key1: {r: 0, g: 0.03529412, b: 1, a: 1}
+      key0: {r: 0.054901965, g: 0.47450984, b: 0.69803923, a: 1}
+      key1: {r: 0.054901965, g: 0.47450984, b: 0.69803923, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1704,7 +1752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9882353, g: 0.98039216, b: 0.98039216, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1880,7 +1928,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.03529412, b: 1, a: 1}
+  m_Color: {r: 0.05490196, g: 0.4745098, b: 0.69803923, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2003,7 +2051,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e269459df12e946478467f81e62815bd, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.94117653, g: 0.7843138, b: 0.03137255, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2247,7 +2295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5b9a770c210c44b89d6051c1ecbd3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  move: {fileID: 1476195685}
   trail: {fileID: 1254435560}
   dashVelocity: 20
   dashTime: 0.2
@@ -2410,7 +2457,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -2732,7 +2779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9882353, g: 0.98039216, b: 0.98039216, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
