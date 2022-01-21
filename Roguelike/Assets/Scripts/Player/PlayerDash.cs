@@ -5,123 +5,92 @@ public class PlayerDash : MonoBehaviour
 {
     Rigidbody2D rb;
 
-    [Header("General")]
-    public LayerMask whatIsGround;
+    private bool isDashing;
+
+    private Timer dashTimer = new Timer();
+
+    [Header("Static Variables")]
     public PlayerMove move;
 
-    private float gravityScale;
-
-    public bool isDashing;
-
-    // DASH
-    [Header("Dash")]
     public TrailRenderer trail;
 
-    [Space]
-    public float dashVelocity = 12f;
+    [Header("Variables")]
+    public float dashVelocity;
+    private Vector2 dashDir;
 
-    public float dashTime = 0.2f;
-    private float dashTimer;
+    public float dashTime;
 
-    [Space]
-    public float dashDestroyRadius = 1f;
-
-    private bool dashFinished;
-
-    [Space]
     public float dashesLeft = 3;
-    public float dashRechargeTime = 1f;
+    public float rechargeRate = 1;
 
-    [Space]
-    public float dashShakeIntensity;
-    public float dashShakeDuration = 0.1f;
+    [Header("Camera Shake")]
+    public float shakeIntensity = 5;
+    public float shakeDuration = 0.1f;
 
     private void Start() {
-        move = GetComponent<PlayerMove>();
         rb = GetComponent<Rigidbody2D>();
 
-        gravityScale = rb.gravityScale;
-        
-        // Setup trail
         trail.emitting = false;
         trail.time = dashTime;
+        
+        dashTimer.SetTime(dashTime);
     }
 
     private void Update() {
-        // Dashing
-        if (dashTimer > 0f) {
-            rb.velocity = move.direction * dashVelocity;
-
-            Vector2 dashPosition = new Vector2(transform.position.x + move.direction.x, transform.position.y + move.direction.y);
-            // Break blocks
-            Collider2D[] blocks = Physics2D.OverlapCircleAll(dashPosition, dashDestroyRadius, whatIsGround);
-            foreach (var block in blocks) {
-                if (block.CompareTag("Destructible")) {
-                    Destroy(block.gameObject);
-                }
-            }
+        if (dashTimer.running) {
+            rb.velocity = dashDir * dashVelocity;
 
             trail.emitting = true;
         }
-        else {
-            isDashing = false;
-            trail.emitting = false;
+        if (dashTimer.Tick()) {
+            ResetState();
         }
-        
-        // Reset velocity when dash stopped
-        if (!dashFinished && dashTimer <= 0f) {
-            rb.velocity = new Vector2(0, 0);
 
-            move.FreezeControl(false);
-            rb.gravityScale = gravityScale;
-
-            dashFinished = true;
-        }
-        
-        // Recharge dashes
         if (dashesLeft < 3f) {
-            dashesLeft += Time.deltaTime * (1 / dashRechargeTime);
+            dashesLeft += Time.deltaTime * rechargeRate;
         }
-        // Clamp dashes
-        else if (dashesLeft > 3f) {
-            dashesLeft = 3f;
-        }
-
-        dashTimer -= Time.deltaTime;
-    }
-
-    private void OnCollisionEnter2D(Collision2D other) {
-        dashTimer = 0f;
     }
 
     public void Dash(InputAction.CallbackContext context) {
-        // Get dash input
-        if (context.started && dashesLeft > 1f) {
+        if (context.started && !dashTimer.running && dashesLeft >= 1f) {
+            dashDir = move.direction;
+            if (Mathf.Abs(dashDir.x) < 0.1f && Mathf.Abs(dashDir.y) < 0.1f) {
+                float horizontal = transform.localScale.x;
+                if (horizontal < 0f) {
+                    horizontal = -1f;
+                }
+                else {
+                    horizontal = 1f;
+                }
+                dashDir = new Vector2(horizontal, 0);
+            }
             move.FreezeControl(true);
-            rb.gravityScale = 0f;
 
+            rb.gravityScale = 0;
+
+            dashTimer.Start();
             isDashing = true;
 
-            // If no direction set, use left/right
-            if (Mathf.Abs(move.direction.x) < 0.1f && Mathf.Abs(move.direction.y) < 0.1f) {
-                move.direction = new Vector2(transform.localScale.x, 0);
-                move.direction.Normalize();
-            }
-
-            // Update variables
-            dashTimer = dashTime;
-            dashFinished = false;
-            
             dashesLeft--;
 
-            // Shake camera
-            CameraShake.Instance.Shake(dashShakeIntensity, dashShakeDuration);
+            CameraShake.Instance.Shake(shakeIntensity, shakeDuration);
         }
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.cyan;
-        Vector2 dashPosition = new Vector2(transform.position.x + move.direction.x, transform.position.y + move.direction.y);
-        Gizmos.DrawWireSphere(dashPosition, dashDestroyRadius);
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (isDashing) {
+            ResetState();
+        }
+    }
+
+    private void ResetState() {
+        rb.velocity = new Vector2(0, 0);
+        rb.gravityScale = 1;
+
+        move.FreezeControl(false);
+
+        dashTimer.Reset();
+        
+        trail.emitting = false;
     }
 }

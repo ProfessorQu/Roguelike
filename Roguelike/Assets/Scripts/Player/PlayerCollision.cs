@@ -8,12 +8,17 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.collider.CompareTag("Enemy")) {
-            if (dash.dashesLeft >= 1f) {
-                dash.dashesLeft--;
-            }
-            else {
-                Destroy(gameObject);
-            }
+            //if (!dash.isDashing) {
+                //if (dash.dashesLeft >= 1f) {
+                    //dash.dashesLeft--;
+                //}
+                //else {
+                    //Destroy(gameObject);
+                //}
+            //}
+            //else {
+                Destroy(other.gameObject);
+            //}
         }
     }
 }

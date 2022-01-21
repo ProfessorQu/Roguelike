@@ -178,7 +178,7 @@ GameObject:
   m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
-  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -453,7 +453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6770d53d228e3054eabcaf72df5d1deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1476195687}
+  player: {fileID: 1476195688}
   dashes:
   - {fileID: 721817309}
   - {fileID: 673093801}
@@ -786,7 +786,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 392539433}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.8924346, y: -7.928304, z: 0.0072205067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1551572422}
@@ -1222,7 +1222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6ca1c6ebcf24d4c883fc2d48f1aec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dash: {fileID: 1476195687}
+  dash: {fileID: 1476195688}
   blinkColors:
   - {r: 1, g: 0, b: 0.07359362, a: 1}
   - {r: 1, g: 0.5663458, b: 0, a: 1}
@@ -1653,7 +1653,7 @@ TrailRenderer:
     generateLightingData: 0
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
-  m_Emitting: 1
+  m_Emitting: 0
 --- !u!1 &1290379896
 GameObject:
   m_ObjectHideFlags: 0
@@ -1952,9 +1952,8 @@ GameObject:
   - component: {fileID: 1476195683}
   - component: {fileID: 1476195686}
   - component: {fileID: 1476195685}
-  - component: {fileID: 1476195689}
-  - component: {fileID: 1476195688}
   - component: {fileID: 1476195687}
+  - component: {fileID: 1476195688}
   - component: {fileID: 1476195684}
   m_Layer: 0
   m_Name: Player
@@ -2084,7 +2083,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1476195688}
+      - m_Target: {fileID: 1476195687}
         m_TargetAssemblyTypeName: PlayerJump, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
@@ -2141,7 +2140,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1476195685}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayerMove, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:
@@ -2156,7 +2155,7 @@ MonoBehaviour:
     m_ActionName: Player/Direction[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1476195687}
+      - m_Target: {fileID: 1476195688}
         m_TargetAssemblyTypeName: PlayerDash, Assembly-CSharp
         m_MethodName: Dash
         m_Mode: 0
@@ -2187,11 +2186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22318ae52a4a4643b430755de011edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dash: {fileID: 1476195687}
-  speed: 8
-  maxFallSpeed: -10
+  speed: 6
   direction: {x: 0, y: 0}
-  fallSpeed: 0
 --- !u!50 &1476195686
 Rigidbody2D:
   serializedVersion: 4
@@ -2208,7 +2204,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9d6be2949988d0341a490fcba8938d3f, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -2222,22 +2218,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1476195680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b5b9a770c210c44b89d6051c1ecbd3e, type: 3}
+  m_Script: {fileID: 11500000, guid: d49fa7390fd031147b894bb19923912c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move: {fileID: 1476195685}
+  groundCheckGizmos: 1
+  wallCheckGizmos: 1
+  groundCheck: {fileID: 84426900}
+  groundCheckSize: {x: 0.7, y: 0.2}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
-  move: {fileID: 1476195685}
-  isDashing: 0
-  trail: {fileID: 1254435560}
-  dashVelocity: 24
-  dashTime: 0.2
-  dashDestroyRadius: 1
-  dashesLeft: 3
-  dashRechargeTime: 5
-  dashShakeIntensity: 5
-  dashShakeDuration: 0.1
+  jumpForce: 8
+  jumpEndedMult: 0.6
+  wallCheck: {fileID: 2042065541}
+  wallCheckSize: {x: 0.2, y: 0.7}
+  wallJumpForce: {x: 4, y: 6}
+  wallJumpTime: 0.1
 --- !u!114 &1476195688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2247,37 +2244,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1476195680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d49fa7390fd031147b894bb19923912c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b5b9a770c210c44b89d6051c1ecbd3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   move: {fileID: 1476195685}
-  rememberGroundedTime: 0.1
-  rememberJumpInputTime: 0.1
-  jumpForce: 8
-  jumpEndedFallSpeed: 0.5
-  groundCheck: {fileID: 84426900}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 128
-  groundCheckSize: {x: 0.7, y: 0.2}
-  wallCheck: {fileID: 2042065541}
-  wallCheckSize: 0.1
-  wallJumpForce: {x: 10, y: 8}
-  wallJumpTime: 0.1
-  slidingSpeed: 3
---- !u!114 &1476195689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476195680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57ad8e13f632f024b93e0d82c8c94867, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dash: {fileID: 1476195687}
+  trail: {fileID: 1254435560}
+  dashVelocity: 20
+  dashTime: 0.2
+  dashesLeft: 3
+  rechargeRate: 1
+  shakeIntensity: 5
+  shakeDuration: 0.1
 --- !u!1 &1477867058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2380,7 +2357,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2404,7 +2381,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1551572419}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.8924346, y: 7.928304, z: -10.00722}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 392539434}
@@ -2543,7 +2520,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619125758}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.8924346, y: 7.928304, z: -0.0072205067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 392539434}
@@ -2931,7 +2908,7 @@ MonoBehaviour:
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
   m_FrequencyGain: 1
-  mNoiseOffsets: {x: 0, y: 0, z: 0}
+  mNoiseOffsets: {x: -52.76761, y: 896.11414, z: 412.28745}
 --- !u!1 &1751104885
 GameObject:
   m_ObjectHideFlags: 0
@@ -3113,7 +3090,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1476195682}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 7
+    OrthographicSize: 4
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -3134,7 +3111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1876223235}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.8924346, y: 7.928304, z: -10.00722}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1739902603}
@@ -3325,7 +3302,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042065540}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3, y: 0.2, z: 0}
+  m_LocalPosition: {x: 1.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1476195682}
