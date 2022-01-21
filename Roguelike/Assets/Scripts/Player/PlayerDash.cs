@@ -5,15 +5,20 @@ public class PlayerDash : MonoBehaviour
 {
     Rigidbody2D rb;
 
-    private bool isDashing;
+    public bool isDashing;
 
     private Timer dashTimer = new Timer();
+    
+    [Header("Gizmos")]
+    public bool dashDestroyGizmos;
 
     [Header("Static Variables")]
+    public TrailRenderer trail;
+    
+    private Animator anim;
+
     PlayerMove move;
     PlayerJump jump;
-
-    public TrailRenderer trail;
 
     [Header("Variables")]
     public float dashVelocity;
@@ -22,7 +27,9 @@ public class PlayerDash : MonoBehaviour
     public float dashTime;
 
     public float dashesLeft = 3;
-    public float rechargeRate = 1;
+    public float rechargeRate = 0.1f;
+
+    public float dashDestroyRadius = 2;
 
     [Header("Camera Shake")]
     public float shakeIntensity = 5;
@@ -30,8 +37,11 @@ public class PlayerDash : MonoBehaviour
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
+
         move = GetComponent<PlayerMove>();
         jump = GetComponent<PlayerJump>();
+
+        anim = GetComponent<Animator>();
 
         trail.emitting = false;
         trail.time = dashTime;
@@ -42,6 +52,13 @@ public class PlayerDash : MonoBehaviour
     private void Update() {
         if (dashTimer.running) {
             rb.velocity = dashDir * dashVelocity;
+
+            Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, dashDestroyRadius, jump.whatIsGround);
+            foreach (var coll in collisions) {
+                if (coll.CompareTag("Destructible")) {
+                    Destroy(coll.gameObject);
+                }
+            }
 
             trail.emitting = true;
         }
@@ -57,7 +74,7 @@ public class PlayerDash : MonoBehaviour
     public void Dash(InputAction.CallbackContext context) {
         if (context.started && !dashTimer.running && dashesLeft >= 1f) {
             dashDir = move.direction;
-            if (Mathf.Abs(dashDir.x) < 0.1f && Mathf.Abs(dashDir.y) < 0.1f) {
+            if (move.NotMoving()) {
                 float horizontal = transform.localScale.x;
                 if (horizontal < 0f) {
                     horizontal = -1f;
@@ -67,6 +84,7 @@ public class PlayerDash : MonoBehaviour
                 }
                 dashDir = new Vector2(horizontal, 0);
             }
+
             move.FreezeControl(true);
 
             rb.gravityScale = 0;
@@ -90,10 +108,17 @@ public class PlayerDash : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         rb.gravityScale = 1;
 
-        move.FreezeControl(false);
-
         dashTimer.Reset();
         
+        move.FreezeControl(false);
         trail.emitting = false;
+        isDashing = false;
+    }
+
+    private void OnDrawGizmos() {
+        if (dashDestroyGizmos) {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position, dashDestroyRadius);
+        }
     }
 }

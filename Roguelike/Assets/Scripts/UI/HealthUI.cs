@@ -7,8 +7,10 @@ public class HealthUI : MonoBehaviour
 
     Image health;
 
-    public Color[] blinkColors;
-    public Color defaultColor;
+    public Color blinkColor;
+    Color defaultColor;
+
+    Color[] colors = new Color[2];
 
     public float blinkInterval = 0.2f;
     private float blinkTimer;
@@ -19,18 +21,22 @@ public class HealthUI : MonoBehaviour
         blinkTimer = blinkInterval;
 
         health = GetComponent<Image>();
+        defaultColor = health.color;
+
+        colors[0] = defaultColor;
+        colors[1] = blinkColor;
     }
 
     private void Update() {
         if (dash.dashesLeft < 1f) {
             if (blinkTimer <= 0f) {
                 colorIndex++;
-                colorIndex %= blinkColors.Length;
+                colorIndex %= colors.Length;
 
                 blinkTimer = blinkInterval;
             }
 
-            health.color = blinkColors[colorIndex];
+            health.color = colors[colorIndex];
 
             blinkTimer -= Time.deltaTime;
         }

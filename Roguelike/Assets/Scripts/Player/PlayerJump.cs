@@ -7,6 +7,7 @@ public class PlayerJump : MonoBehaviour
 
     [Header("Static Variables")]
     public PlayerMove move;
+    private Animator anim;
 
     [Header("Gizmos")]
     public bool groundCheckGizmos;
@@ -35,8 +36,18 @@ public class PlayerJump : MonoBehaviour
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
         wallJumpTimer.SetTime(wallJumpTime);
+    }
+
+    private void Update() {
+        if (IsGrounded()) {
+            anim.SetBool("isJumping", false);
+        }
+        else {
+            anim.SetBool("isJumping", true);
+        }
     }
 
     private void FixedUpdate() {
@@ -64,7 +75,8 @@ public class PlayerJump : MonoBehaviour
 
             if (IsGrounded()) {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                return;
+
+                anim.SetTrigger("takeOff");
             }
             else if (wall != null) {
                 wallJumpDir = transform.position.x - wall.transform.position.x;
@@ -79,6 +91,7 @@ public class PlayerJump : MonoBehaviour
                 move.FreezeControl(true);
             }
         }
+
         if (context.canceled && rb.velocity.y > 0f) {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpEndedMult);
         }
