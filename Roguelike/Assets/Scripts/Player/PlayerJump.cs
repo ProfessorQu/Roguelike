@@ -5,18 +5,8 @@ public class PlayerJump : MonoBehaviour
 {
     Rigidbody2D rb;
 
-    [Header("Static Variables")]
-    public PlayerMove move;
+    private Player player;
     private Animator anim;
-
-    [Header("Gizmos")]
-    public bool groundCheckGizmos;
-    public bool wallCheckGizmos;
-
-    [Header("Ground Check")]
-    public Transform groundCheck;
-    public Vector2 groundCheckSize;
-    public LayerMask whatIsGround;
 
     [Header("Jump Variables")]
     public float jumpForce = 6f;
@@ -27,10 +17,6 @@ public class PlayerJump : MonoBehaviour
 
     [Header("Landing")]
     public GameObject dustParticles;
-
-    [Header("Wall Check")]
-    public Transform wallCheck;
-    public Vector2 wallCheckSize;
 
     [Header("Wall Jump Variables")]
     private Timer wallJumpTimer = new Timer();
@@ -43,19 +29,19 @@ public class PlayerJump : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
+        player = GetComponent<Player>();
+
         wallJumpTimer.SetTime(wallJumpTime);
     }
 
     private void Update() {
-        anim.SetBool("isFalling", !isGrounded);
+        anim.SetBool("isFalling", !player.IsGrounded());
     }
 
     private void FixedUpdate() {
-        isGrounded = IsGrounded();
-
         if (wallJumpTimer.Tick()) {
             wallJumpTimer.Reset();
-            move.FreezeControl(false);
+            player.FreezeControl(false);
 
             rb.velocity = new Vector2(0, rb.velocity.y);
         } else if (wallJumpTimer.running) {
@@ -63,28 +49,21 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
-    public Collider2D IsTouchingWall() {
-        return Physics2D.OverlapBox(wallCheck.position, wallCheckSize, 0f, whatIsGround);
-    }
-
-    public bool IsGrounded() {
-        return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, whatIsGround);
-    }
-
     public void Land() {
-        Vector2 dustPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
-        Instantiate(dustParticles, dustPos, Quaternion.identity);
+        Collider2D ground = player.IsGrounded();
+
+        player.SpawnDust(ground);
     }
     
     public void Jump(InputAction.CallbackContext context) {
         if (context.started) {
-            Collider2D wall = IsTouchingWall();
+            Collider2D wall = player.IsTouchingWall();
 
-            if (IsGrounded()) {
+            if (player.IsGrounded()) {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 
-                Vector2 dustPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
-                Instantiate(dustParticles, dustPos, Quaternion.identity);
+                Collider2D ground = player.IsGrounded();
+                player.SpawnDust(ground);
 
                 anim.SetTrigger("takeOff");
             }
@@ -98,7 +77,7 @@ public class PlayerJump : MonoBehaviour
                 }
 
                 wallJumpTimer.Start();
-                move.FreezeControl(true);
+                player.FreezeControl(true);
             }
         }
 
@@ -107,15 +86,4 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos() {
-        if (groundCheckGizmos) {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawCube(groundCheck.position, groundCheckSize);
-        }
-
-        if (wallCheckGizmos) {
-            Gizmos.color = Color.red;
-            Gizmos.DrawCube(wallCheck.position, wallCheckSize);
-        }
-    }
 }

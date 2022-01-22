@@ -5,8 +5,7 @@ public class PlayerMove : MonoBehaviour
 {
     Rigidbody2D rb;
 
-    PlayerJump jump;
-
+    Player player;
 
     private Animator anim;
 
@@ -15,16 +14,14 @@ public class PlayerMove : MonoBehaviour
 
     private bool facingRight = true;
 
-    private bool freezeControl;
     
-    public GameObject dustParticles;
     public float timeBetweenDust = 1f;
     private Timer dustTimer = new Timer();
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
         
-        jump = GetComponent<PlayerJump>();
+        player = GetComponent<Player>();
 
         anim = GetComponent<Animator>();
 
@@ -33,18 +30,19 @@ public class PlayerMove : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if (!freezeControl) {
+        if (!player.freezeControl) {
             rb.velocity = new Vector2(direction.x * speed, rb.velocity.y);
 
         }
     }
 
     private void Update() {
-        if (!freezeControl) {
-            if (jump.IsGrounded() && !NotMoving()) {
+        if (!player.freezeControl) {
+            Collider2D ground = player.IsGrounded();
+
+            if (ground && !player.NotMoving()) {
                 if (dustTimer.Tick()) {
-                    Vector2 dustPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
-                    Instantiate(dustParticles, dustPos, Quaternion.identity);
+                    player.SpawnDust(ground);
 
                     dustTimer.Reset();
                     dustTimer.Start();
@@ -60,6 +58,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+
     private void Flip() {
         facingRight = !facingRight;
         Vector2 localScale = transform.localScale;
@@ -67,19 +66,13 @@ public class PlayerMove : MonoBehaviour
         transform.localScale = localScale;
     }
 
-    public void FreezeControl(bool freeze) {
-        freezeControl = freeze;
-    }
-
-    public bool NotMoving() {
-        return Mathf.Abs(direction.x) < 0.1f && Mathf.Abs(direction.y) < 0.1f;
-    }
+    
 
     public void Move(InputAction.CallbackContext context) {
-        if (!freezeControl) {
+        if (!player.freezeControl) {
             direction = context.ReadValue<Vector2>().normalized;
 
-            if (NotMoving()) {
+            if (player.NotMoving()) {
                 anim.SetBool("isRunning", false);
             }
             else {

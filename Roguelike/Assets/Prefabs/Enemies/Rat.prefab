@@ -31,8 +31,8 @@ Transform:
   m_LocalPosition: {x: 1.5, y: 1.5, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
-  - {fileID: 5992811654874802599}
   - {fileID: 7590167260951527708}
+  - {fileID: 5992811654874802599}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
+  deathParticles: {fileID: 8997387565260647733, guid: 5f7593d211c920d48822020f148a8ab5, type: 3}
   frontCheck: {fileID: 5992811654874802599}
   whatIGround:
     serializedVersion: 2
@@ -148,7 +149,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5992811654410539748}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8760243550053410677
 GameObject:
@@ -179,7 +180,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5992811654410539748}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2270664491013135565
 SpriteRenderer:

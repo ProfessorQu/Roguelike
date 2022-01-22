@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  deathParticles: {fileID: 8997387565260647733, guid: 5a37e8fabe7988946b11f2107766d344, type: 3}
   groundCheck: {fileID: 1196752901683541463}
   whatIsGround:
     serializedVersion: 2

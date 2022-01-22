@@ -13,12 +13,12 @@ public class PlayerDash : MonoBehaviour
     public bool dashDestroyGizmos;
 
     [Header("Static Variables")]
-    public TrailRenderer trail;
+    public ParticleSystem afterImage;
+    private ParticleSystem.EmissionModule afterImageEmission;
     
     private Animator anim;
 
-    PlayerMove move;
-    PlayerJump jump;
+    Player player;
 
     [Header("Variables")]
     public float dashVelocity;
@@ -38,13 +38,12 @@ public class PlayerDash : MonoBehaviour
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
 
-        move = GetComponent<PlayerMove>();
-        jump = GetComponent<PlayerJump>();
+        player = GetComponent<Player>();
 
         anim = GetComponent<Animator>();
 
-        trail.emitting = false;
-        trail.time = dashTime;
+        afterImageEmission = afterImage.emission;
+        afterImageEmission.enabled = false;
         
         dashTimer.SetTime(dashTime);
     }
@@ -53,14 +52,14 @@ public class PlayerDash : MonoBehaviour
         if (dashTimer.running) {
             rb.velocity = dashDir * dashVelocity;
 
-            Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, dashDestroyRadius, jump.whatIsGround);
+            Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, dashDestroyRadius, player.whatIsGround);
             foreach (var coll in collisions) {
                 if (coll.CompareTag("Destructible")) {
                     Destroy(coll.gameObject);
                 }
             }
 
-            trail.emitting = true;
+            afterImageEmission.enabled = true;
         }
         if (dashTimer.Tick()) {
             ResetState();
@@ -73,8 +72,8 @@ public class PlayerDash : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext context) {
         if (context.started && !dashTimer.running && dashesLeft >= 1f) {
-            dashDir = move.direction;
-            if (move.NotMoving()) {
+            dashDir = player.direction;
+            if (player.NoDirection()) {
                 float horizontal = transform.localScale.x;
                 if (horizontal < 0f) {
                     horizontal = -1f;
@@ -85,7 +84,7 @@ public class PlayerDash : MonoBehaviour
                 dashDir = new Vector2(horizontal, 0);
             }
 
-            move.FreezeControl(true);
+            player.FreezeControl(true);
 
             rb.gravityScale = 0;
 
@@ -100,7 +99,15 @@ public class PlayerDash : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (isDashing) {
-            ResetState();
+            if (other.collider.CompareTag("Enemy")) {
+                other.gameObject.GetComponent<EnemyAI>().Kill();
+            }
+            else if (other.collider.CompareTag("Destructible")) {
+                Destroy(other.gameObject);
+            }
+            else {
+                ResetState();
+            }
         }
     }
 
@@ -110,8 +117,8 @@ public class PlayerDash : MonoBehaviour
 
         dashTimer.Reset();
         
-        move.FreezeControl(false);
-        trail.emitting = false;
+        player.FreezeControl(false);
+        afterImageEmission.enabled = false;
         isDashing = false;
     }
 

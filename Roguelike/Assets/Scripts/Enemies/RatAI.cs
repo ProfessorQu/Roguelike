@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RatAI : MonoBehaviour
+public class RatAI : EnemyAI
 {
-    Rigidbody2D rb;
-
-    private int direction = 1;
-    private bool facingRight = true;
-
     public float speed = 10;
+
+    public GameObject deathParticles;
 
     [Header("Front Check")]
     public Transform frontCheck;
@@ -23,32 +20,24 @@ public class RatAI : MonoBehaviour
     private void Update() {
         rb.velocity = new Vector2(direction * speed, rb.velocity.y);
 
-        if (IsTouchingWall()) {
+        if (GetObjectsInFront()) {
             direction *= -1;
         }
         
         // Flip character
-        if (!facingRight && direction > 0f) {
-            Flip();
-        }
-        else if (facingRight && direction < 0f) {
-            Flip();
-        }
+        UpdateFlip();
+    }
+    
+    public override void Kill()
+    {
+        Instantiate(deathParticles, transform.position, Quaternion.identity);
+
+        Destroy(gameObject);
     }
 
-    private bool IsTouchingWall() {
+    private bool GetObjectsInFront() {
         return Physics2D.OverlapBox(frontCheck.position, frontCheckSize, 0f);
     } 
-
-    private void Flip() {
-        // Flip the player
-        facingRight = !facingRight;
-
-        Vector3 localScale = transform.localScale;
-        localScale.x *= -1;
-
-        transform.localScale = localScale;
-    }
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;
