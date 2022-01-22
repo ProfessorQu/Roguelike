@@ -2267,7 +2267,7 @@ MonoBehaviour:
   speed: 6
   direction: {x: 0, y: 0}
   dustParticles: {fileID: 8804468514756989408, guid: 933858b12eccff540a8d6c0970f8cd8b, type: 3}
-  timeBetweenDust: 0.3
+  timeBetweenDust: 1
 --- !u!50 &1476195686
 Rigidbody2D:
   serializedVersion: 4

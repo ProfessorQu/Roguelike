@@ -23,12 +23,10 @@ public class PlayerJump : MonoBehaviour
 
     public float jumpEndedMult = 0.5f;
 
-    private bool isFalling;
+    private bool isGrounded;
 
     [Header("Landing")]
     public GameObject dustParticles;
-
-    private float lastY;
 
     [Header("Wall Check")]
     public Transform wallCheck;
@@ -49,18 +47,12 @@ public class PlayerJump : MonoBehaviour
     }
 
     private void Update() {
-        lastY = transform.position.y;
-        if (IsGrounded()) {
-            isFalling = false;
-        }
-        else {
-            isFalling = true;
-        }
-
-        anim.SetBool("isFalling", isFalling);
+        anim.SetBool("isFalling", !isGrounded);
     }
 
     private void FixedUpdate() {
+        isGrounded = IsGrounded();
+
         if (wallJumpTimer.Tick()) {
             wallJumpTimer.Reset();
             move.FreezeControl(false);
@@ -79,11 +71,9 @@ public class PlayerJump : MonoBehaviour
         return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, whatIsGround);
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
-        // if (!other.collider.CompareTag("Enemy") && lastY != transform.position.y) {
-        //     Vector2 dustPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
-        //     Instantiate(dustParticles, dustPos, Quaternion.identity);
-        // }
+    public void Land() {
+        Vector2 dustPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
+        Instantiate(dustParticles, dustPos, Quaternion.identity);
     }
     
     public void Jump(InputAction.CallbackContext context) {
@@ -92,6 +82,9 @@ public class PlayerJump : MonoBehaviour
 
             if (IsGrounded()) {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                
+                Vector2 dustPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
+                Instantiate(dustParticles, dustPos, Quaternion.identity);
 
                 anim.SetTrigger("takeOff");
             }
