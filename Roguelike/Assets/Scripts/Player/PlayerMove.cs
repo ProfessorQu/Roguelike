@@ -41,12 +41,14 @@ public class PlayerMove : MonoBehaviour
 
     private void Update() {
         if (!freezeControl) {
-            if (jump.IsGrounded() && !NotMoving() && dustTimer.Tick()) {
-                Vector2 dustPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
-                Instantiate(dustParticles, dustPos, Quaternion.identity);
+            if (jump.IsGrounded() && !NotMoving()) {
+                if (dustTimer.Tick()) {
+                    Vector2 dustPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
+                    Instantiate(dustParticles, dustPos, Quaternion.identity);
 
-                dustTimer.Reset();
-                dustTimer.Start();
+                    dustTimer.Reset();
+                    dustTimer.Start();
+                }
             }
         }
 
@@ -69,6 +71,10 @@ public class PlayerMove : MonoBehaviour
         freezeControl = freeze;
     }
 
+    public bool NotMoving() {
+        return Mathf.Abs(direction.x) < 0.1f && Mathf.Abs(direction.y) < 0.1f;
+    }
+
     public void Move(InputAction.CallbackContext context) {
         if (!freezeControl) {
             direction = context.ReadValue<Vector2>().normalized;
@@ -80,9 +86,5 @@ public class PlayerMove : MonoBehaviour
                 anim.SetBool("isRunning", true);
             }
         }
-    }
-
-    public bool NotMoving() {
-        return Mathf.Abs(direction.x) < 0.1f && Mathf.Abs(direction.y) < 0.1f;
     }
 }

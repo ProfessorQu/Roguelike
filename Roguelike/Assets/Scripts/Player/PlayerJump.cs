@@ -23,6 +23,13 @@ public class PlayerJump : MonoBehaviour
 
     public float jumpEndedMult = 0.5f;
 
+    private bool isFalling;
+
+    [Header("Landing")]
+    public GameObject dustParticles;
+
+    private float lastY;
+
     [Header("Wall Check")]
     public Transform wallCheck;
     public Vector2 wallCheckSize;
@@ -42,12 +49,15 @@ public class PlayerJump : MonoBehaviour
     }
 
     private void Update() {
+        lastY = transform.position.y;
         if (IsGrounded()) {
-            anim.SetBool("isJumping", false);
+            isFalling = false;
         }
         else {
-            anim.SetBool("isJumping", true);
+            isFalling = true;
         }
+
+        anim.SetBool("isFalling", isFalling);
     }
 
     private void FixedUpdate() {
@@ -67,6 +77,13 @@ public class PlayerJump : MonoBehaviour
 
     public bool IsGrounded() {
         return Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, whatIsGround);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        // if (!other.collider.CompareTag("Enemy") && lastY != transform.position.y) {
+        //     Vector2 dustPos = new Vector2(transform.position.x, transform.position.y - 0.5f);
+        //     Instantiate(dustParticles, dustPos, Quaternion.identity);
+        // }
     }
     
     public void Jump(InputAction.CallbackContext context) {

@@ -99,7 +99,7 @@ public class PlayerDash : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (isDashing && jump.IsTouchingWall()) {
+        if (isDashing) {
             ResetState();
         }
     }
