@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5981044028015220834}
   - component: {fileID: 6213784406271876361}
   - component: {fileID: 186906234166021251}
+  - component: {fileID: 8817457907932868289}
   m_Layer: 0
   m_Name: Rat Death
   m_TagString: Untagged
@@ -4862,3 +4863,16 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &8817457907932868289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8997387565260647733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad9deeed73b89c846a4b87ae6b560cc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBeforeDestroy: 5

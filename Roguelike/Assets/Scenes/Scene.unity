@@ -498,8 +498,6 @@ MonoBehaviour:
   - {fileID: 721817309}
   - {fileID: 673093801}
   - {fileID: 1406762696}
-  shakeIntensity: 10
-  shakeDuration: 0.2
   dashRecharging: {r: 0, g: 0.5882353, b: 1, a: 1}
   dashReady: {r: 0, g: 0, b: 0.5882353, a: 1}
 --- !u!1 &244473142
@@ -7154,6 +7152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashUI: {fileID: 232674690}
+  damageParticles: {fileID: 1729894492361097671, guid: 0cf0ede5d949d654f90358d10930846b, type: 3}
+  intensity: 1
+  duration: 0.2
 --- !u!95 &1476195690
 Animator:
   serializedVersion: 3
@@ -7800,7 +7801,7 @@ MonoBehaviour:
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.8
-  m_BiasX: 0
+  m_BiasX: -0.000000037252903
   m_BiasY: 0
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2

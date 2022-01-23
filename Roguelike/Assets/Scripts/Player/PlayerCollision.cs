@@ -8,6 +8,12 @@ public class PlayerCollision : MonoBehaviour
 
     public DashUI dashUI;
 
+    public GameObject damageParticles;
+
+    [Header("Camera Shake")]
+    public float intensity = 1f;
+    public float duration = 0.2f;
+
     private void Start() {
         dash = GetComponent<PlayerDash>();
     }
@@ -18,6 +24,10 @@ public class PlayerCollision : MonoBehaviour
                 if (dash.dashesLeft >= 1f) {
                     dash.dashesLeft =  Mathf.Floor(dash.dashesLeft - 1);
                     dashUI.Damage();
+
+                    Instantiate(damageParticles, other.contacts[0].point, Quaternion.identity);
+
+                    CameraShake.Instance.Shake(intensity, duration);
                 }
                 else {
                     Destroy(gameObject);

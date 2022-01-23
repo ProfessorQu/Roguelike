@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class PlayerMove : MonoBehaviour
 {
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
+    private Player player;
 
-    Player player;
+    private CinemachineVirtualCamera cam;
+    private CinemachineFramingTransposer framingTransposer;
 
     private Animator anim;
 
@@ -20,8 +23,10 @@ public class PlayerMove : MonoBehaviour
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
-        
         player = GetComponent<Player>();
+
+        cam = GameObject.FindObjectOfType<Cinemachine.CinemachineVirtualCamera>();
+        framingTransposer = cam.GetCinemachineComponent<CinemachineFramingTransposer>();
 
         anim = GetComponent<Animator>();
 
@@ -32,7 +37,6 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate() {
         if (!player.freezeControl) {
             rb.velocity = new Vector2(direction.x * speed, rb.velocity.y);
-
         }
     }
 
@@ -47,6 +51,13 @@ public class PlayerMove : MonoBehaviour
                     dustTimer.Reset();
                     dustTimer.Start();
                 }
+            }
+
+            if (direction.y < 0f) {
+                framingTransposer.m_ScreenY = 0f;
+            }
+            else {
+                framingTransposer.m_ScreenY = 0.5f;
             }
         }
 
