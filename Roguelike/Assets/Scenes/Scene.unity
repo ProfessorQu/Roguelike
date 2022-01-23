@@ -390,6 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 199287053}
+  - component: {fileID: 199287054}
   m_Layer: 5
   m_Name: Second
   m_TagString: Untagged
@@ -418,6 +419,25 @@ RectTransform:
   m_AnchoredPosition: {x: -250, y: 0}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &199287054
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199287052}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5d28cd97cd92bb04ca3440ae70b014ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &232674688
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,9 +491,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1476195688}
   dashes:
+  - {fileID: 1390959754}
+  - {fileID: 199287052}
+  - {fileID: 244473142}
+  dashCharges:
   - {fileID: 721817309}
   - {fileID: 673093801}
   - {fileID: 1406762696}
+  shakeIntensity: 10
+  shakeDuration: 0.2
   dashRecharging: {r: 0, g: 0.5882353, b: 1, a: 1}
   dashReady: {r: 0, g: 0, b: 0.5882353, a: 1}
 --- !u!1 &244473142
@@ -485,6 +511,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 244473143}
+  - component: {fileID: 244473144}
   m_Layer: 5
   m_Name: Third
   m_TagString: Untagged
@@ -513,6 +540,25 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: 0}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &244473144
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244473142}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5d28cd97cd92bb04ca3440ae70b014ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &360102153
 GameObject:
   m_ObjectHideFlags: 0
@@ -6652,6 +6698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1390959755}
+  - component: {fileID: 1390959756}
   m_Layer: 5
   m_Name: First
   m_TagString: Untagged
@@ -6680,6 +6727,25 @@ RectTransform:
   m_AnchoredPosition: {x: -600, y: 0}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &1390959756
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390959754}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5d28cd97cd92bb04ca3440ae70b014ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1406762694
 GameObject:
   m_ObjectHideFlags: 0
@@ -7087,6 +7153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ad8e13f632f024b93e0d82c8c94867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashUI: {fileID: 232674690}
 --- !u!95 &1476195690
 Animator:
   serializedVersion: 3

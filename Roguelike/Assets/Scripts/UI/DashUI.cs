@@ -6,11 +6,20 @@ using UnityEngine.UI;
 public class DashUI : MonoBehaviour
 {
     public PlayerDash player;
-    public Image[] dashes;
+    public GameObject[] dashes;
+    public Image[] dashCharges;
+
+    private Animator[] dashAnims = new Animator[3];
 
     [Space]
     public Color dashRecharging;
     public Color dashReady;
+
+    private void Start() {
+        for (int i = 0; i < dashes.Length; i++) {
+            dashAnims[i] = dashes[i].GetComponent<Animator>();
+        }
+    }
 
     private void Update() {
         // Update all dash images
@@ -19,14 +28,26 @@ public class DashUI : MonoBehaviour
 
             // Set color
             if (fillAmount == 1f) {
-                dashes[i].color = dashReady;
+                dashCharges[i].color = dashReady;
             }
             else {
-                dashes[i].color = dashRecharging;
+                dashCharges[i].color = dashRecharging;
             }
 
             // Set fill amount
-            dashes[i].fillAmount = fillAmount;
+            dashCharges[i].fillAmount = fillAmount;
+        }
+    }
+
+    public void Damage() {
+        if (player.dashesLeft >= 2f) {
+            dashAnims[2].SetTrigger("damage");
+        }
+        else if (player.dashesLeft >= 1f) {
+            dashAnims[1].SetTrigger("damage");
+        }
+        else if (player.dashesLeft >= 0f) {
+            dashAnims[0].SetTrigger("damage");
         }
     }
 }

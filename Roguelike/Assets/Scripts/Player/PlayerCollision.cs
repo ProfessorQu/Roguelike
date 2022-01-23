@@ -6,6 +6,8 @@ public class PlayerCollision : MonoBehaviour
 {
     PlayerDash dash;
 
+    public DashUI dashUI;
+
     private void Start() {
         dash = GetComponent<PlayerDash>();
     }
@@ -14,14 +16,12 @@ public class PlayerCollision : MonoBehaviour
         if (other.collider.CompareTag("Enemy")) {
             if (!dash.isDashing) {
                 if (dash.dashesLeft >= 1f) {
-                    dash.dashesLeft--;
+                    dash.dashesLeft =  Mathf.Floor(dash.dashesLeft - 1);
+                    dashUI.Damage();
                 }
                 else {
                     Destroy(gameObject);
                 }
-            }
-            else {
-                Destroy(other.gameObject);
             }
         }
     }
