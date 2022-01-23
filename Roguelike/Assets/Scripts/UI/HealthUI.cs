@@ -28,7 +28,7 @@ public class HealthUI : MonoBehaviour
     }
 
     private void Update() {
-        if (dash.dashesLeft < 1f) {
+        if (dash.dashLeft < 1f) {
             if (blinkTimer <= 0f) {
                 colorIndex++;
                 colorIndex %= colors.Length;

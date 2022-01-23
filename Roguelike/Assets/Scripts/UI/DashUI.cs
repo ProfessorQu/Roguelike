@@ -6,48 +6,36 @@ using UnityEngine.UI;
 public class DashUI : MonoBehaviour
 {
     public PlayerDash player;
-    public GameObject[] dashes;
-    public Image[] dashCharges;
+    public Image charge;
 
-    private Animator[] dashAnims = new Animator[3];
+    private Animator anim;
 
     [Space]
-    public Color dashRecharging;
-    public Color dashReady;
+    public Color rechargingColor;
+    public Color readyColor;
 
     private void Start() {
-        for (int i = 0; i < dashes.Length; i++) {
-            dashAnims[i] = dashes[i].GetComponent<Animator>();
-        }
+        anim = GetComponent<Animator>();
     }
 
     private void Update() {
         // Update all dash images
-        for (int i = 0; i < dashes.Length; i++) {
-            float fillAmount = Mathf.Clamp(player.dashesLeft - i, 0, 1);
+        
+        float fillAmount = Mathf.Clamp(player.dashLeft, 0, 1);
 
-            // Set color
-            if (fillAmount == 1f) {
-                dashCharges[i].color = dashReady;
-            }
-            else {
-                dashCharges[i].color = dashRecharging;
-            }
-
-            // Set fill amount
-            dashCharges[i].fillAmount = fillAmount;
+        // Set color
+        if (fillAmount == 1f) {
+            charge.color = readyColor;
         }
+        else {
+            charge.color = rechargingColor;
+        }
+
+        // Set fill amount
+        charge.fillAmount = fillAmount;
     }
 
     public void Damage() {
-        if (player.dashesLeft >= 2f) {
-            dashAnims[2].SetTrigger("damage");
-        }
-        else if (player.dashesLeft >= 1f) {
-            dashAnims[1].SetTrigger("damage");
-        }
-        else if (player.dashesLeft >= 0f) {
-            dashAnims[0].SetTrigger("damage");
-        }
+        anim.SetTrigger("damage");
     }
 }

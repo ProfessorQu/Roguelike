@@ -21,8 +21,8 @@ public class PlayerCollision : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.collider.CompareTag("Enemy")) {
             if (!dash.isDashing) {
-                if (dash.dashesLeft >= 1f) {
-                    dash.dashesLeft =  Mathf.Floor(dash.dashesLeft - 1);
+                if (dash.dashLeft >= 1f) {
+                    dash.dashLeft = 0;
                     dashUI.Damage();
 
                     Instantiate(damageParticles, other.contacts[0].point, Quaternion.identity);

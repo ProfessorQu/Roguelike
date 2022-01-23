@@ -26,7 +26,7 @@ public class PlayerDash : MonoBehaviour
 
     public float dashTime;
 
-    public float dashesLeft = 3;
+    public float dashLeft = 1;
     public float rechargeRate = 0.1f;
 
     public float dashDestroyRadius = 2;
@@ -65,13 +65,17 @@ public class PlayerDash : MonoBehaviour
             ResetState();
         }
 
-        if (dashesLeft < 3f) {
-            dashesLeft += Time.deltaTime * rechargeRate;
+        if (dashLeft < 1f) {
+            dashLeft += Time.deltaTime * rechargeRate;
+        }
+
+        if (dashLeft > 1f) {
+            dashLeft = 1f;
         }
     }
 
     public void Dash(InputAction.CallbackContext context) {
-        if (context.started && !dashTimer.running && dashesLeft >= 1f) {
+        if (context.started && !dashTimer.running && dashLeft == 1f) {
             dashDir = player.direction;
             if (player.NoDirection()) {
                 float horizontal = transform.localScale.x;
@@ -91,7 +95,7 @@ public class PlayerDash : MonoBehaviour
             dashTimer.Start();
             isDashing = true;
 
-            dashesLeft--;
+            dashLeft = 0f;
 
             CameraShake.Instance.Shake(shakeIntensity, shakeDuration);
         }
