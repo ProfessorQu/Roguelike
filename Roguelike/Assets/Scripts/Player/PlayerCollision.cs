@@ -14,25 +14,52 @@ public class PlayerCollision : MonoBehaviour
     public float intensity = 1f;
     public float duration = 0.2f;
 
+    [Header("Invulnerability")]
+    public float invTime = 0.1f;
+    private Timer invTimer = new Timer();
+
+    private bool canTakeDamage = true;
+
     private void Start() {
         dash = GetComponent<PlayerDash>();
+
+        invTimer.SetTime(invTime);
+        invTimer.Start();
+    }
+
+    private void Update() {
+        if (invTimer.Tick()) {
+            canTakeDamage = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.collider.CompareTag("Enemy")) {
-            if (!dash.isDashing) {
-                if (dash.dashLeft >= 1f) {
-                    dash.dashLeft = 0;
-                    dashUI.Damage();
+        TakeDamage(other);
+    }
 
-                    Instantiate(damageParticles, other.contacts[0].point, Quaternion.identity);
+    private void OnCollisionStay2D(Collision2D other) {
+        TakeDamage(other);
+    }
 
-                    CameraShake.Instance.Shake(intensity, duration);
-                }
-                else {
-                    Destroy(gameObject);
-                }
+    private void TakeDamage(Collision2D other) {
+
+        if (other.collider.CompareTag("Enemy") && !dash.isDashing && canTakeDamage) {
+            if (dash.dashLeft == 1f) {
+                dash.dashLeft = 0;
+                dashUI.Damage();
+
+                Instantiate(damageParticles, other.contacts[0].point, Quaternion.identity);
+
+                CameraShake.Instance.Shake(intensity, duration);
             }
+            else {
+                Destroy(gameObject);
+            }
+
+            invTimer.Reset();
+            invTimer.Start();
+
+            canTakeDamage = false;
         }
     }
 }

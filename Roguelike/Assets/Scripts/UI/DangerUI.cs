@@ -13,10 +13,10 @@ public class DangerUI : MonoBehaviour
 
     private void Update() {
         if (dash.dashLeft < 1f) {
-            anim.SetTrigger("show");
+            anim.SetBool("danger", true);
         }
         else {
-            anim.SetTrigger("hide");
+            anim.SetBool("danger", false);
         }
     }
 
