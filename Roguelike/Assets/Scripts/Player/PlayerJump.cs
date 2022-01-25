@@ -51,8 +51,9 @@ public class PlayerJump : MonoBehaviour
 
     public void Land() {
         Collider2D ground = player.IsGrounded();
-
-        player.SpawnDust(ground);
+        if (ground) {
+            player.SpawnDust(ground);
+        }
     }
     
     public void Jump(InputAction.CallbackContext context) {
