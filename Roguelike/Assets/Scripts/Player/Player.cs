@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    PlayerMove move;
-    PlayerJump jump;
-    PlayerDash dash;
+    [HideInInspector] public PlayerMove move;
+    [HideInInspector] public PlayerJump jump;
+    [HideInInspector] public PlayerDash dash;
+
+    public int coins = 0;
     
     [Header("Gizmos")]
     public bool groundCheckGizmos;

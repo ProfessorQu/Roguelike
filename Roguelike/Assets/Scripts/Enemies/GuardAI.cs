@@ -39,8 +39,13 @@ public class GuardAI : EnemyAI
         Destroy(gameObject);
     }
 
-    private Collider2D GetObjectsInFront() {
-        return Physics2D.OverlapBox(frontCheck.position, frontCheckSize, 0f);
+    private bool GetObjectsInFront() {
+        Collider2D coll = Physics2D.OverlapBox(frontCheck.position, frontCheckSize, 0f);
+        if (coll) {
+            return !coll.CompareTag("Player");
+        }
+
+        return false;
     }
 
     private bool GroundInFront() {

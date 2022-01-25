@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-    PlayerDash dash;
+    private Player player;
 
     public DashUI dashUI;
 
     public GameObject damageParticles;
+    public GameObject collectCoinParticles;
 
     [Header("Camera Shake")]
     public float intensity = 1f;
@@ -21,7 +22,7 @@ public class PlayerCollision : MonoBehaviour
     private bool canTakeDamage = true;
 
     private void Start() {
-        dash = GetComponent<PlayerDash>();
+        player = GetComponent<Player>();
 
         invTimer.SetTime(invTime);
         invTimer.Start();
@@ -35,6 +36,10 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Coin")) {
+            AudioManager.Instance.Play("Pickup Coin");
+            player.coins++;
+            
+            Instantiate(collectCoinParticles, other.transform.position, Quaternion.identity);
             Destroy(other.gameObject);
         }
     }
@@ -48,11 +53,11 @@ public class PlayerCollision : MonoBehaviour
     }
 
     private void TakeDamage(Collision2D other) {
-        if (other.collider.CompareTag("Enemy") && !dash.isDashing && canTakeDamage) {
-            if (dash.dashLeft == 1f) {
+        if (other.collider.CompareTag("Enemy") && !player.dash.isDashing && canTakeDamage) {
+            if (player.dash.dashLeft == 1f) {
                 AudioManager.Instance.Play("Damage");
 
-                dash.dashLeft = 0;
+                player.dash.dashLeft = 0;
                 dashUI.Damage();
 
                 Instantiate(damageParticles, other.contacts[0].point, Quaternion.identity);

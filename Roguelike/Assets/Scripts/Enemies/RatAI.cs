@@ -36,8 +36,13 @@ public class RatAI : EnemyAI
     }
 
     private bool GetObjectsInFront() {
-        return Physics2D.OverlapBox(frontCheck.position, frontCheckSize, 0f);
-    } 
+        Collider2D coll = Physics2D.OverlapBox(frontCheck.position, frontCheckSize, 0f);
+        if (coll) {
+            return !coll.CompareTag("Player");
+        }
+
+        return false;
+    }
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;

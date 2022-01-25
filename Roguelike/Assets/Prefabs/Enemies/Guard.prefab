@@ -134,7 +134,7 @@ MonoBehaviour:
     m_Bits: 128
   groundCheckSize: 0.1
   frontCheck: {fileID: 1388668057432258722}
-  frontCheckSize: {x: 0.2, y: 0.7}
+  frontCheckSize: {x: 0.2, y: 0.9}
 --- !u!95 &6009293603250533203
 Animator:
   serializedVersion: 3
