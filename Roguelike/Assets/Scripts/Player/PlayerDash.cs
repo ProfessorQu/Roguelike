@@ -76,6 +76,8 @@ public class PlayerDash : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext context) {
         if (context.started && !dashTimer.running && dashLeft == 1f) {
+            AudioManager.Instance.Play("Dash");
+            
             dashDir = player.direction;
             if (player.NoDirection()) {
                 float horizontal = transform.localScale.x;

@@ -33,6 +33,12 @@ public class PlayerCollision : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Coin")) {
+            Destroy(other.gameObject);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D other) {
         TakeDamage(other);
     }
@@ -42,9 +48,10 @@ public class PlayerCollision : MonoBehaviour
     }
 
     private void TakeDamage(Collision2D other) {
-
         if (other.collider.CompareTag("Enemy") && !dash.isDashing && canTakeDamage) {
             if (dash.dashLeft == 1f) {
+                AudioManager.Instance.Play("Damage");
+
                 dash.dashLeft = 0;
                 dashUI.Damage();
 

@@ -50,6 +50,8 @@ public class PlayerJump : MonoBehaviour
     }
 
     public void Land() {
+        AudioManager.Instance.Play("Land");
+        
         Collider2D ground = player.IsGrounded();
         if (ground) {
             player.SpawnDust(ground);
@@ -61,6 +63,8 @@ public class PlayerJump : MonoBehaviour
             Collider2D wall = player.IsTouchingWall();
 
             if (player.IsGrounded()) {
+                AudioManager.Instance.Play("Jump");
+
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 
                 Collider2D ground = player.IsGrounded();
