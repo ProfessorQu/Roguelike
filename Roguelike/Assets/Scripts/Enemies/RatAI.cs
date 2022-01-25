@@ -10,7 +10,7 @@ public class RatAI : EnemyAI
 
     [Header("Front Check")]
     public Transform frontCheck;
-    public LayerMask whatIGround;
+    public LayerMask whatIsGround;
     public Vector2 frontCheckSize = new Vector2(0.1f, 0.3f);
 
     private void Start() {
@@ -36,7 +36,7 @@ public class RatAI : EnemyAI
     }
 
     private bool GetObjectsInFront() {
-        Collider2D coll = Physics2D.OverlapBox(frontCheck.position, frontCheckSize, 0f);
+        Collider2D coll = Physics2D.OverlapBox(frontCheck.position, frontCheckSize, 0f, whatIsGround);
         if (coll) {
             return !coll.CompareTag("Player");
         }

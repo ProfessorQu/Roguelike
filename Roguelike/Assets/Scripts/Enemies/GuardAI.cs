@@ -19,6 +19,10 @@ public class GuardAI : EnemyAI
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
+
+        if (Physics2D.OverlapBox(transform.position, transform.localScale, 0f)) {
+            Destroy(gameObject);
+        }
     }
 
     private void Update() {
@@ -40,7 +44,7 @@ public class GuardAI : EnemyAI
     }
 
     private bool GetObjectsInFront() {
-        Collider2D coll = Physics2D.OverlapBox(frontCheck.position, frontCheckSize, 0f);
+        Collider2D coll = Physics2D.OverlapBox(frontCheck.position, frontCheckSize, 0f, whatIsGround);
         if (coll) {
             return !coll.CompareTag("Player");
         }

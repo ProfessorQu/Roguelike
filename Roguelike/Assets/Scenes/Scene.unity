@@ -6561,7 +6561,8 @@ MonoBehaviour:
   - {fileID: 1312799883291597459, guid: 8829d4d221c8e704cb6276d49ce4de16, type: 3}
   - {fileID: 5319631998762405801, guid: 5bf7b9c0b337569499fcfd7ee30343fe, type: 3}
   - {fileID: 5894216435720914038, guid: a427cc41fe9348740bed6894a0b2cc25, type: 3}
-  startingPlatform: {fileID: 7127408952520966138, guid: 0f112a83739ff8e448199d6b1d58958a, type: 3}
+  entryPlatform: {fileID: 7127408952520966138, guid: 0f112a83739ff8e448199d6b1d58958a, type: 3}
+  exitPlatform: {fileID: 7127408952520966138, guid: 46678d2664da9374e9b4293c29c78d19, type: 3}
   moveAmount: 10
   startTimeBtwRoom: 0
   minX: -15
@@ -6635,6 +6636,7 @@ GameObject:
   - component: {fileID: 1476195687}
   - component: {fileID: 1476195688}
   - component: {fileID: 1476195689}
+  - component: {fileID: 1476195691}
   - component: {fileID: 1476195684}
   - component: {fileID: 1476195690}
   m_Layer: 0
@@ -6829,6 +6831,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 52c9170f-7374-48e2-83b7-a2c14ebab230
     m_ActionName: Player/Dash[/Keyboard/j,/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1476195691}
+        m_TargetAssemblyTypeName: PlayerExit, Assembly-CSharp
+        m_MethodName: ExitLevel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8ae90ecc-2f1a-42c8-b5e7-aa63f3b68119
+    m_ActionName: Player/Enter[/XInputControllerWindows/rightTrigger,/Keyboard/k]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -6946,6 +6964,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1476195691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476195680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419a6f910affd504b9f8ff4d988faaf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1477867058
 GameObject:
   m_ObjectHideFlags: 0

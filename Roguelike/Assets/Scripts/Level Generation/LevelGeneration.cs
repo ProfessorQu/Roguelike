@@ -16,7 +16,8 @@ public class LevelGeneration : MonoBehaviour
         index 3 --> LRTB
     */
 
-    public GameObject startingPlatform;
+    public GameObject entryPlatform;
+    public GameObject exitPlatform;
 
     private int direction;
     public float moveAmount;
@@ -42,12 +43,12 @@ public class LevelGeneration : MonoBehaviour
 
         Instantiate(rooms[0], transform.position, Quaternion.identity);
 
-        Vector2 playerPosition = new Vector2(transform.position.x, transform.position.y + player.transform.localScale.y * 2);
+        Vector2 playerPosition = new Vector2(transform.position.x, transform.position.y - 0.5f);
         player.transform.position = playerPosition;
 
         playerRB = player.GetComponent<Rigidbody2D>();
 
-        Instantiate(startingPlatform, transform.position, Quaternion.identity);
+        Instantiate(entryPlatform, transform.position, Quaternion.identity);
 
         direction = Random.Range(1, 6);
     }
@@ -136,6 +137,9 @@ public class LevelGeneration : MonoBehaviour
                 
                 direction = Random.Range(1, 6);
             } else {
+                Vector2 pos = new Vector2(transform.position.x, transform.position.y - 1f);
+                Instantiate(exitPlatform, pos, Quaternion.identity);
+ 
                 stopGeneration = true;
             }
         }

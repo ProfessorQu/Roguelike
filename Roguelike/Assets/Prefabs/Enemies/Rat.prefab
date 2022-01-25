@@ -98,7 +98,7 @@ MonoBehaviour:
   speed: 7
   deathParticles: {fileID: 8997387565260647733, guid: 5f7593d211c920d48822020f148a8ab5, type: 3}
   frontCheck: {fileID: 5992811654874802599}
-  whatIGround:
+  whatIsGround:
     serializedVersion: 2
     m_Bits: 128
   frontCheckSize: {x: 0.1, y: 0.5}
