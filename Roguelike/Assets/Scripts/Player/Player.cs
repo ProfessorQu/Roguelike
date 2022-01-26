@@ -8,8 +8,6 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerJump jump;
     [HideInInspector] public PlayerDash dash;
 
-    public int coins = 0;
-    
     [Header("Gizmos")]
     public bool groundCheckGizmos;
     public bool wallCheckGizmos;

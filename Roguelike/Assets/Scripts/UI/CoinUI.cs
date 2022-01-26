@@ -14,6 +14,6 @@ public class CoinUI : MonoBehaviour
     }
 
     private void Update() {
-        coinText.text = player.coins.ToString();
+        coinText.text = Game_Manager.Instance.coins.ToString();
     }
 }

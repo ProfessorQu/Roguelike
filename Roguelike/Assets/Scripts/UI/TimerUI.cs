@@ -3,8 +3,6 @@ using TMPro;
 
 public class TimerUI : MonoBehaviour
 {
-    private float time;
-
     private TMP_Text text;
 
     private void Start() {
@@ -12,8 +10,8 @@ public class TimerUI : MonoBehaviour
     }
 
     private void Update() {
-        time += Time.deltaTime;
-
+        float time = Game_Manager.Instance.time;
+        
         int minutes = Mathf.FloorToInt(time / 60);
         int seconds = Mathf.FloorToInt(time) - (minutes * 60);
 

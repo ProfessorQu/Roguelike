@@ -37,7 +37,7 @@ public class PlayerCollision : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Coin")) {
             AudioManager.Instance.Play("Pickup Coin");
-            player.coins++;
+            Game_Manager.Instance.coins++;
             
             Instantiate(collectCoinParticles, other.transform.position, Quaternion.identity);
             Destroy(other.gameObject);
