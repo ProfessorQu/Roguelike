@@ -68,7 +68,6 @@ public class PlayerCollision : MonoBehaviour
                 player.move.enabled = false;
                 player.dash.enabled = false;
                 player.jump.enabled = false;
-                player.exit.enabled = false;
 
                 Game_Manager.Instance.GameOver();
             }

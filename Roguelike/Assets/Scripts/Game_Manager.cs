@@ -11,7 +11,7 @@ public class Game_Manager : MonoBehaviour
     public float transitionTime = 1f;
 
     [Space]
-    public int currentLevel = 0;
+    public int currentLevel = 1;
     public int maxLevel = 5;
     
     [Space]
@@ -41,12 +41,12 @@ public class Game_Manager : MonoBehaviour
 
     public bool LoadNextLevel() {
         if (!gameOver) {
-            if (currentLevel <= maxLevel && FindObjectOfType<Player>().IsGrounded()) {
+            if (currentLevel < maxLevel && FindObjectOfType<Player>().IsGrounded()) {
                 StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
 
                 return true;
             }
-            else if (currentLevel >= maxLevel) {
+            else if (currentLevel == maxLevel) {
                 Debug.Log("Finished game!");
 
                 return true;
@@ -64,6 +64,8 @@ public class Game_Manager : MonoBehaviour
         SceneManager.LoadScene(levelIndex);
         currentLevel++;
         
+        yield return new WaitForSeconds(0.05f);
+        
         death = GameObject.FindGameObjectWithTag("DeathScreen");
         death.SetActive(false);
     }
@@ -75,7 +77,6 @@ public class Game_Manager : MonoBehaviour
     }
 
     public void Retry() {
-        gameOver = false;
         
         StartCoroutine(RetryLevel());
     }
@@ -86,6 +87,13 @@ public class Game_Manager : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        currentLevel = 1;
+        coins = 0;
+        time = 0;
+        gameOver = false;
+        
+        yield return new WaitForSeconds(0.05f);
         
         death = GameObject.FindGameObjectWithTag("DeathScreen");
         death.SetActive(false);

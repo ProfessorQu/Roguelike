@@ -10,6 +10,6 @@ public class LevelUI : MonoBehaviour
     }
 
     private void Update() {
-        text.text = "Level " + (Game_Manager.Instance.currentLevel + 1).ToString();
+        text.text = "Level " + Game_Manager.Instance.currentLevel.ToString();
     }
 }
