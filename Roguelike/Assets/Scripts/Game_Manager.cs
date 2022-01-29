@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Game_Manager : MonoBehaviour
 {
     public static Game_Manager Instance;
+    GameObject death;
 
     public float transitionTime = 1f;
 
@@ -17,9 +18,15 @@ public class Game_Manager : MonoBehaviour
     public int coins = 0;
     public float time;
 
+    private bool gameOver = false;
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;
+
+            death = GameObject.FindGameObjectWithTag("DeathScreen");
+            death.SetActive(false);
+
             DontDestroyOnLoad(gameObject);
         }
         else {
@@ -28,29 +35,59 @@ public class Game_Manager : MonoBehaviour
     }
 
     private void Update() {
-        time += Time.deltaTime;
+        if (!gameOver)
+            time += Time.deltaTime;
     }
 
     public bool LoadNextLevel() {
-        if (currentLevel < maxLevel && FindObjectOfType<Player>().IsGrounded()) {
-            currentLevel++;
-            StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
-            return true;
-        }
-        else if (currentLevel == maxLevel) {
-            Debug.Log("Finished game!");
+        if (!gameOver) {
+            if (currentLevel <= maxLevel && FindObjectOfType<Player>().IsGrounded()) {
+                StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
 
-            return true;
+                return true;
+            }
+            else if (currentLevel >= maxLevel) {
+                Debug.Log("Finished game!");
+
+                return true;
+            }
         }
 
         return false;
     }
 
-    IEnumerator LoadLevel(int levelIndex) {
+    private IEnumerator LoadLevel(int levelIndex) {
         LevelTransition.Instance.PlayAnimation();
 
         yield return new WaitForSeconds(transitionTime);
 
         SceneManager.LoadScene(levelIndex);
+        currentLevel++;
+        
+        death = GameObject.FindGameObjectWithTag("DeathScreen");
+        death.SetActive(false);
+    }
+
+    public void GameOver() {
+        gameOver = true;
+
+        death.SetActive(true);
+    }
+
+    public void Retry() {
+        gameOver = false;
+        
+        StartCoroutine(RetryLevel());
+    }
+
+    private IEnumerator RetryLevel() {
+        LevelTransition.Instance.PlayAnimation();
+
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
+        death = GameObject.FindGameObjectWithTag("DeathScreen");
+        death.SetActive(false);
     }
 }

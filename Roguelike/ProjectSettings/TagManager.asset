@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Coin
   - Exit
+  - DeathScreen
   layers:
   - Default
   - TransparentFX

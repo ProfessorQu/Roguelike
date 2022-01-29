@@ -65,7 +65,12 @@ public class PlayerCollision : MonoBehaviour
                 CameraShake.Instance.Shake(intensity, duration);
             }
             else {
-                Destroy(gameObject);
+                player.move.enabled = false;
+                player.dash.enabled = false;
+                player.jump.enabled = false;
+                player.exit.enabled = false;
+
+                Game_Manager.Instance.GameOver();
             }
 
             invTimer.Reset();

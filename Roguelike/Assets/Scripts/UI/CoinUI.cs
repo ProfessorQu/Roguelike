@@ -5,8 +5,6 @@ using TMPro;
 
 public class CoinUI : MonoBehaviour
 {
-    public Player player;
-
     private TMP_Text coinText;
 
     private void Start() {
