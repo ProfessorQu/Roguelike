@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &444040762294995705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 444040762294995654}
+  - component: {fileID: 444040762294995655}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &444040762294995654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444040762294995705}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &444040762294995655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444040762294995705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7374924d977813446a5736e87e43327c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Jump
+    clip: {fileID: 8300000, guid: df0ba21af83c6354eb3748fad1eac170, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 8300000, guid: 9f2d6041a2a1c87419f2435d87f9fdf8, type: 3}
+    volume: 0.5
+    pitch: 1.2
+    source: {fileID: 0}
+  - name: Damage
+    clip: {fileID: 8300000, guid: 1c874849cf1ff3b4cb3d8f6be219a236, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Land
+    clip: {fileID: 8300000, guid: d7a15367431d9b84a963cf00ee6c49f7, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Pickup Coin
+    clip: {fileID: 8300000, guid: 08e0f638641baca4fba2bc2e5b53f01e, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}

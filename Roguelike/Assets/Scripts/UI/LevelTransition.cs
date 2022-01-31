@@ -16,4 +16,8 @@ public class LevelTransition : MonoBehaviour
     public void PlayAnimation() {
         transition.SetTrigger("start");
     }
+
+    public void ResetAnimation() {
+        transition.SetTrigger("end");
+    }
 }

@@ -77,11 +77,14 @@ public class Game_Manager : MonoBehaviour
     }
 
     public void Retry() {
-        
-        StartCoroutine(RetryLevel());
+        if (gameOver) {
+            StartCoroutine(RetryLevel());
+        }
     }
 
     private IEnumerator RetryLevel() {
+        gameOver = false;
+        
         LevelTransition.Instance.PlayAnimation();
 
         yield return new WaitForSeconds(transitionTime);
@@ -91,7 +94,6 @@ public class Game_Manager : MonoBehaviour
         currentLevel = 1;
         coins = 0;
         time = 0;
-        gameOver = false;
         
         yield return new WaitForSeconds(0.05f);
         
