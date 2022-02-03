@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
     [HideInInspector] public PlayerMove move;
     [HideInInspector] public PlayerJump jump;
     [HideInInspector] public PlayerDash dash;
-    [HideInInspector] public PlayerExit exit;
 
     [Header("Gizmos")]
     public bool groundCheckGizmos;
@@ -34,7 +33,6 @@ public class Player : MonoBehaviour
         move = GetComponent<PlayerMove>();
         jump = GetComponent<PlayerJump>();
         dash = GetComponent<PlayerDash>();
-        exit = GetComponent<PlayerExit>();
     }
 
     private void Update() {

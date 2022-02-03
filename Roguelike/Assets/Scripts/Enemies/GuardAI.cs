@@ -39,6 +39,8 @@ public class GuardAI : EnemyAI
     public override void Kill()
     {
         Instantiate(deathParticles, transform.position, Quaternion.identity);
+        
+        Game_Manager.Instance.kills++;
 
         Destroy(gameObject);
     }

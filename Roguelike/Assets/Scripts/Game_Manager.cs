@@ -18,6 +18,8 @@ public class Game_Manager : MonoBehaviour
     public int coins = 0;
     public float time;
 
+    public int kills = 0;
+
     private bool gameOver = false;
 
     private void Awake() {
@@ -25,7 +27,9 @@ public class Game_Manager : MonoBehaviour
             Instance = this;
 
             death = GameObject.FindGameObjectWithTag("DeathScreen");
-            death.SetActive(false);
+            if (death) {
+                death.SetActive(false);
+            }
 
             DontDestroyOnLoad(gameObject);
         }
@@ -40,17 +44,16 @@ public class Game_Manager : MonoBehaviour
     }
 
     public bool LoadNextLevel() {
-        if (!gameOver) {
-            if (currentLevel < maxLevel && FindObjectOfType<Player>().IsGrounded()) {
-                StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
+        if (currentLevel < maxLevel) {
+            StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex));
 
-                return true;
-            }
-            else if (currentLevel == maxLevel) {
-                Debug.Log("Finished game!");
+            return true;
+        }
+        else if (currentLevel == maxLevel) {
+            gameOver = true;
+            StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
 
-                return true;
-            }
+            return true;
         }
 
         return false;
@@ -78,8 +81,13 @@ public class Game_Manager : MonoBehaviour
 
     public void Retry() {
         if (gameOver) {
+            gameOver = false;
             StartCoroutine(RetryLevel());
         }
+    }
+
+    public void Exit() {
+        StartCoroutine(LoadLevel(0));
     }
 
     private IEnumerator RetryLevel() {

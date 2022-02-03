@@ -36,6 +36,8 @@ public class RatAI : EnemyAI
     {
         Instantiate(deathParticles, transform.position, Quaternion.identity);
 
+        Game_Manager.Instance.kills++;
+
         Destroy(gameObject);
     }
 

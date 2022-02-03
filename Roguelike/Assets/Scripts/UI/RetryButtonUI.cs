@@ -9,6 +9,6 @@ public class RetryButtonUI : MonoBehaviour
 
     private void Start() {
         button = GetComponent<Button>();
-        button.onClick.AddListener(Game_Manager.Instance.Retry);
+        button.onClick.AddListener(() => Game_Manager.Instance.Retry());
     }
 }
